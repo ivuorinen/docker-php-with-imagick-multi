@@ -16,10 +16,12 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build:
+  BuildAndRelease:
     runs-on: ubuntu-latest
+    continue-on-error: true
 
     strategy:
+      fail-fast: false
       matrix:
         php: [php74, php80, php81, php82]
 
