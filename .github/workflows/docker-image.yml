@@ -48,4 +48,4 @@ jobs:
           file: Dockerfile-${{ matrix.php }}
           platforms: ${{ matrix.arch }}
           push: true
-          tags: ${{ env.IMAGE_NAME }}:${{ matrix.php }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.php }}
