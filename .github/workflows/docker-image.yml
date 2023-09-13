@@ -43,7 +43,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Push (${{ matrix.php }} / ${{ matrix.arch }})
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           file: Dockerfile-${{ matrix.php }}
           platforms: ${{ matrix.arch }}
