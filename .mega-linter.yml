@@ -21,7 +21,6 @@ DISABLE_LINTERS:
   - PHP_PSALM
   - COPYPASTE_JSCPD
 
-TRIVY_SEVERITY: CRITICAL,HIGH
 PHP_PHPSTAN_CONFIG_FILE: phpstan.neon
 FILTER_REGEX_EXCLUDE: >
   (node_modules|vendor|\.automation/test|docs/json-schemas|\.github/workflows)
