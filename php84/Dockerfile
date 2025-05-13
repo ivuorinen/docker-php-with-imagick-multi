@@ -6,16 +6,9 @@ LABEL \
   version="1.0" \
   description="PHP 8.4 with Imagick and Composer"
 
-USER www-data
-
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD php -v || exit 1
-
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
 # Install PHP extensions and required libraries
-RUN set -o pipefail \
-  && apt-get update --no-cache \
+RUN \
+  apt-get update --no-cache \
   && apt-get install -y --no-install-recommends \
   libicu-dev \
   libxml2-dev \
@@ -40,14 +33,8 @@ RUN set -o pipefail \
   && yes '' | pecl install imagick \
   && docker-php-ext-enable imagick \
   && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
-
-# Install Composer
-RUN set -o pipefail \
+  && rm -rf /var/lib/apt/lists/* \
   && curl -sS https://getcomposer.org/installer | \
-  php -- --install-dir=/usr/local/bin --filename=composer
-
-# Verify installations
-RUN set -o pipefail \
+  php -- --install-dir=/usr/local/bin --filename=composer \
   && php --version \
   && composer --version

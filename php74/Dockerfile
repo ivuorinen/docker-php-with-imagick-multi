@@ -6,21 +6,19 @@ LABEL \
   version="1.0" \
   description="PHP 7.4 with Imagick and Composer"
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
 # Install PHP extensions and required libraries
 RUN \
-  apt-get update \
+  apt-get update --no-cache \
   && apt-get install -y --no-install-recommends \
-  libicu-dev=* \
-  libxml2-dev=2.* \
-  libfreetype6-dev=2.* \
-  libjpeg62-turbo-dev=* \
-  libpng-dev=1.* \
-  libonig-dev=6.* \
-  libmagickwand-dev=8:6.* \
-  python3-dev=3.* \
-  unzip=6.* \
+  libicu-dev \
+  libxml2-dev \
+  libfreetype6-dev \
+  libjpeg62-turbo-dev \
+  libpng-dev \
+  libonig-dev \
+  libmagickwand-dev \
+  python3-dev \
+  unzip \
   && docker-php-ext-configure gd --with-freetype --with-jpeg \
   && docker-php-ext-install -j$(nproc) \
   bcmath \
@@ -35,19 +33,8 @@ RUN \
   && yes '' | pecl install imagick \
   && docker-php-ext-enable imagick \
   && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
-
-# Install Composer
-RUN set -o pipefail \
+  && rm -rf /var/lib/apt/lists/* \
   && curl -sS https://getcomposer.org/installer | \
-  php -- --install-dir=/usr/local/bin --filename=composer
-
-# Verify installations
-RUN set -o pipefail \
+  php -- --install-dir=/usr/local/bin --filename=composer \
   && php --version \
   && composer --version
-
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD php -v || exit 1
-
-USER www-data
