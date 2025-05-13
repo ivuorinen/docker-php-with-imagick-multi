@@ -8,7 +8,7 @@ LABEL \
 
 # Install PHP extensions and required libraries
 RUN \
-  apt-get update --no-cache \
+  apt-get update \
   && apt-get install -y --no-install-recommends \
   libicu-dev \
   libxml2-dev \
