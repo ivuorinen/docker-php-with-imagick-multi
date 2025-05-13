@@ -75,7 +75,7 @@ jobs:
             --platform ${{ matrix.arch }} \
             --tag $IMAGE_TAG \
             --progress plain \
-            --load . | tee build.log
+            --load ./${{ matrix.php }}/Dockerfile | tee build.log
           END=$(date +%s)
           echo "duration=$((END-START))" >> $GITHUB_OUTPUT
           if grep -q 'CACHED' build.log; then
