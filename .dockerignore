@@ -1,0 +1,5 @@
+.github
+.editorconfig
+.mega-linter.yml
+lint.sh
+README.md

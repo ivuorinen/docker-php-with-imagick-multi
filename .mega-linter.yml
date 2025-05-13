@@ -9,10 +9,11 @@ SHOW_ELAPSED_TIME: false # Show elapsed time at the end of MegaLinter run
 FILEIO_REPORTER: false # Generate file.io report
 GITHUB_STATUS_REPORTER: true # Generate GitHub status report
 IGNORE_GENERATED_FILES: true # Ignore generated files
-JAVASCRIPT_DEFAULT_STYLE: prettier # Default style for JavaScript
 PRINT_ALPACA: false # Print Alpaca logo in console
 SARIF_REPORTER: true # Generate SARIF report
 SHOW_SKIPPED_LINTERS: false # Show skipped linters in MegaLinter log
+FLAVOR_SUGGESTIONS: false
+REPOSITORY_KICS_CONFIG_FILE: ".kics.config.yaml"
 
 DISABLE_LINTERS:
   - REPOSITORY_DEVSKIM
@@ -20,7 +21,3 @@ DISABLE_LINTERS:
   - SPELL_CSPELL
   - PHP_PSALM
   - COPYPASTE_JSCPD
-
-PHP_PHPSTAN_CONFIG_FILE: phpstan.neon
-FILTER_REGEX_EXCLUDE: >
-  (node_modules|vendor|\.automation/test|docs/json-schemas|\.github/workflows)
