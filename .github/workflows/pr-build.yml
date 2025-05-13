@@ -69,6 +69,7 @@ jobs:
         run: |
           TAG_ARCH="${{ matrix.arch }}"
           TAG_ARCH="${TAG_ARCH//\//-}"
+          echo "tag_arch=${TAG_ARCH}" >> $GITHUB_OUTPUT
           IMAGE_TAG="${{ env.IMAGE_NAME }}:${{ matrix.php }}-${TAG_ARCH}"
           START=$(date +%s)
           docker buildx build \
@@ -114,13 +115,13 @@ jobs:
               size_mb: $size_mb,
               base_image: $base_image,
               cache_used: $cache_used
-            }' > result.json
+            }' > result-${{ matrix.php }}-${{ steps.build.outputs.tag_arch }}.json
 
       - name: Upload build result
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: build-results
-          path: result.json
+          path: result-${{ matrix.php }}-${{ steps.build.outputs.tag_arch }}.json
 
   aggregate-results:
     name: Aggregate Results and Comment
