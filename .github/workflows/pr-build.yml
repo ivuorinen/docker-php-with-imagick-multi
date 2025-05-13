@@ -67,25 +67,30 @@ jobs:
         id: build
         shell: bash
         run: |
-          START="$(date +%s)"
+          TAG_ARCH="${{ matrix.arch }}"
+          TAG_ARCH="${TAG_ARCH//\//-}"
+          IMAGE_TAG="${{ env.IMAGE_NAME }}:${{ matrix.php }}-${TAG_ARCH}"
+          START=$(date +%s)
           docker buildx build \
             --platform ${{ matrix.arch }} \
-            --tag ${{ env.IMAGE_NAME }}:${{ matrix.php }}-${{ matrix.arch }} \
+            --tag $IMAGE_TAG \
             --progress plain \
             --load . | tee build.log
-          END="$(date +%s)"
-          echo "duration=$((END-START))" >> "$GITHUB_OUTPUT"
+          END=$(date +%s)
+          echo "duration=$((END-START))" >> $GITHUB_OUTPUT
           if grep -q 'CACHED' build.log; then
-            echo "cache_used=true" >> "$GITHUB_OUTPUT"
+            echo "cache_used=true" >> $GITHUB_OUTPUT
           else
-            echo "cache_used=false" >> "$GITHUB_OUTPUT"
+            echo "cache_used=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Get image size
         id: image_info
         shell: bash
         run: |
-          IMAGE="${{ env.IMAGE_NAME }}:${{ matrix.php }}-${{ matrix.arch }}"
+          TAG_ARCH="${{ matrix.arch }}"
+          TAG_ARCH="${TAG_ARCH//\//-}"
+          IMAGE="${{ env.IMAGE_NAME }}:${{ matrix.php }}-${TAG_ARCH}"
           SIZE="$(docker image inspect $IMAGE --format='{{.Size}}')"
           SIZE_MB="$((SIZE/1024/1024))"
           echo "size_mb=$SIZE_MB" >> "$GITHUB_OUTPUT"
