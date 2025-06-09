@@ -74,10 +74,10 @@ jobs:
           START="$(date +%s)"
           docker buildx build \
             --platform ${{ matrix.arch }} \
-            --tag $IMAGE_TAG \
+            --tag "$IMAGE_TAG" \
             --progress plain \
             --load ./${{ matrix.php }}/ | tee build.log
-          END=$(date +%s)
+          END="$(date +%s)"
           echo "duration=$((END-START))" >> "$GITHUB_OUTPUT"
           if grep -q 'CACHED' build.log; then
             echo "cache_used=true" >> "$GITHUB_OUTPUT"
