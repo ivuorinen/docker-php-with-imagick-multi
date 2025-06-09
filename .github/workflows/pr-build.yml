@@ -71,7 +71,7 @@ jobs:
           TAG_ARCH="${TAG_ARCH//\//-}"
           echo "tag_arch=${TAG_ARCH}" >> "$GITHUB_OUTPUT"
           IMAGE_TAG="${{ env.IMAGE_NAME }}:${{ matrix.php }}-${TAG_ARCH}"
-          START=$(date +%s)
+          START="$(date +%s)"
           docker buildx build \
             --platform ${{ matrix.arch }} \
             --tag $IMAGE_TAG \
@@ -92,7 +92,7 @@ jobs:
           TAG_ARCH="${{ matrix.arch }}"
           TAG_ARCH="${TAG_ARCH//\//-}"
           IMAGE="${{ env.IMAGE_NAME }}:${{ matrix.php }}-${TAG_ARCH}"
-          SIZE="$(docker image inspect $IMAGE --format='{{.Size}}')"
+          SIZE="$(docker image inspect "$IMAGE" --format='{{.Size}}')"
           SIZE_MB="$((SIZE/1024/1024))"
           echo "size_mb=$SIZE_MB" >> "$GITHUB_OUTPUT"
 
