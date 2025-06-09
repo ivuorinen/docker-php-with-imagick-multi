@@ -69,7 +69,7 @@ jobs:
       - name: Extract base image
         id: baseimage
         run: |
-          BASE_IMAGE="$(grep -m1 '^FROM ' Dockerfile | awk '{print $2}')"
+          BASE_IMAGE="$(grep -m1 '^FROM ' ${{ env.DOCKERFILE_PATH }} | awk '{print $2}')"
           echo "base_image=$BASE_IMAGE" >> "$GITHUB_OUTPUT"
 
       - name: Build Docker image (capture cache usage)
