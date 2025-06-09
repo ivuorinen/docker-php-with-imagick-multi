@@ -69,7 +69,7 @@ jobs:
         run: |
           TAG_ARCH="${{ matrix.arch }}"
           TAG_ARCH="${TAG_ARCH//\//-}"
-          echo "tag_arch=${TAG_ARCH}" >> $GITHUB_OUTPUT
+          echo "tag_arch=${TAG_ARCH}" >> "$GITHUB_OUTPUT"
           IMAGE_TAG="${{ env.IMAGE_NAME }}:${{ matrix.php }}-${TAG_ARCH}"
           START=$(date +%s)
           docker buildx build \
@@ -78,11 +78,11 @@ jobs:
             --progress plain \
             --load ./${{ matrix.php }}/ | tee build.log
           END=$(date +%s)
-          echo "duration=$((END-START))" >> $GITHUB_OUTPUT
+          echo "duration=$((END-START))" >> "$GITHUB_OUTPUT"
           if grep -q 'CACHED' build.log; then
-            echo "cache_used=true" >> $GITHUB_OUTPUT
+            echo "cache_used=true" >> "$GITHUB_OUTPUT"
           else
-            echo "cache_used=false" >> $GITHUB_OUTPUT
+            echo "cache_used=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Get image size
@@ -163,3 +163,4 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body-file: comment.md
           body-includes: "## Build Matrix Results"
+
