@@ -132,7 +132,7 @@ jobs:
       - name: Upload build result
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: build-results
+          name: build-results-${{  steps.resultfile.outputs.filename }}
           path: results/
           overwrite: true
           if-no-files-found: warn
