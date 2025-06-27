@@ -160,6 +160,7 @@ jobs:
         id: summarize
         shell: bash
         run: |
+          set -x
           {
             echo "## Build Matrix Results"
             echo ""
@@ -167,6 +168,10 @@ jobs:
             echo "|-------------|--------------|---------|--------------|-----------------|------------|------------|"
           } > comment.md
           for f in ${{ steps.dl.outputs.download-path }}/*.json; do
+            echo "debug"
+            cat "$f"
+            echo "/debug"
+
             php=$(jq -r .php "$f")
             arch=$(jq -r .arch "$f")
             status=$(jq -r .status "$f")
