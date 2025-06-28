@@ -167,7 +167,7 @@ jobs:
             echo "| PHP Version | Architecture | Status  | Duration (s) | Image Size (MB) | Base Image | Cache Used |"
             echo "|-------------|--------------|---------|--------------|-----------------|------------|------------|"
           } > comment.md
-          for f in ${{ steps.dl.outputs.download-path }}/*.json; do
+          for f in ${{ steps.dl.outputs.download-path }}/**/*.json; do
             echo "debug"
             cat "$f"
             echo "/debug"
