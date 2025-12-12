@@ -130,7 +130,7 @@ jobs:
           mv ${{ steps.resultfile.outputs.filename }} results/
 
       - name: Upload build result
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: build-results-${{ steps.resultfile.outputs.filename }}
           path: results/
@@ -152,7 +152,7 @@ jobs:
     steps:
       - name: Download all build results
         id: dl
-        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
           path: results
 
