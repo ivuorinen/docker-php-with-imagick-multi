@@ -1,5 +1,5 @@
 # vim: set ft=dockerfile ts=2 sw=2 sts=2 et:
-FROM php:8.0@sha256:0569e384b9064c04dec55dc6e41be41b494a878dfbb6577a7d76bd50cfd5bc00
+FROM php:8.5@sha256:7c99b9bd905eacaa1609e1b0bc5dfd632887e40dde06bbabca4936e134103aa4
 
 LABEL \
   maintainer="Ismo Vuorinen <ismo@ivuorinen.net>" \
