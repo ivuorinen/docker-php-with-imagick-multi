@@ -82,6 +82,8 @@ jobs:
           docker buildx build \
             --platform ${{ matrix.arch }} \
             --tag "$IMAGE_TAG" \
+            --cache-from type=gha,scope=${{ matrix.php }}-${{ matrix.arch }} \
+            --cache-to type=gha,mode=max,scope=${{ matrix.php }}-${{ matrix.arch }} \
             --progress plain \
             --load ./${{ matrix.php }}/ | tee build.log
           END="$(date +%s)"
