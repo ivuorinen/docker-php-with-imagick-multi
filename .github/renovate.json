@@ -1,4 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>ivuorinen/renovate-config"]
+  "extends": ["github>ivuorinen/renovate-config"],
+  "packageRules": [
+    {
+      "description": "Only allow digest updates for PHP base images, not version upgrades",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["php", "library/php"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "enabled": false
+    }
+  ]
 }

@@ -21,7 +21,7 @@ permissions: read-all
 jobs:
   pr-build:
     name: PR Build
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.arch == 'linux/arm64' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
     timeout-minutes: 30
 
     permissions:
@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [php74, php80, php81, php82, php83, php84]
+        php: [php74, php80, php81, php82, php83, php84, php85]
         arch: ["linux/amd64", "linux/arm64"]
 
     steps:
@@ -69,7 +69,7 @@ jobs:
       - name: Extract base image
         id: baseimage
         run: |
-          BASE_IMAGE="$(grep -m1 '^FROM ' ${{ env.DOCKERFILE_PATH }} | awk '{print $2}')"
+          BASE_IMAGE="$(grep -m1 '^FROM ' ./${{ matrix.php }}/Dockerfile | awk '{print $2}')"
           echo "base_image=$BASE_IMAGE" >> "$GITHUB_OUTPUT"
 
       - name: Build Docker image (capture cache usage)
@@ -82,6 +82,8 @@ jobs:
           docker buildx build \
             --platform ${{ matrix.arch }} \
             --tag "$IMAGE_TAG" \
+            --cache-from type=gha,scope=${{ matrix.php }}-${{ matrix.arch }} \
+            --cache-to type=gha,mode=max,scope=${{ matrix.php }}-${{ matrix.arch }} \
             --progress plain \
             --load ./${{ matrix.php }}/ | tee build.log
           END="$(date +%s)"
