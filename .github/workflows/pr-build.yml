@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [php74, php80, php81, php82, php83, php84]
+        php: [php74, php80, php81, php82, php83, php84, php85]
         arch: ["linux/amd64", "linux/arm64"]
 
     steps:
