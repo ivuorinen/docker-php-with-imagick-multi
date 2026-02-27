@@ -5,8 +5,20 @@ name: Lint Code Base
 on:
   push:
     branches: [master, main]
+    paths:
+      - "**/Dockerfile"
+      - ".github/workflows/**"
+      - ".mega-linter.yml"
+      - ".hadolint.yaml"
+      - ".yamllint.yml"
   pull_request:
     branches: [master, main]
+    paths:
+      - "**/Dockerfile"
+      - ".github/workflows/**"
+      - ".mega-linter.yml"
+      - ".hadolint.yaml"
+      - ".yamllint.yml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
