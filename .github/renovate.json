@@ -5,7 +5,7 @@
     {
       "description": "Only allow digest updates for PHP base images, not version upgrades",
       "matchDatasources": ["docker"],
-      "matchPackageNames": ["php"],
+      "matchPackageNames": ["php", "library/php"],
       "matchUpdateTypes": ["major", "minor", "patch"],
       "enabled": false
     }

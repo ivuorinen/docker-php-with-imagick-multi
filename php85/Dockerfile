@@ -17,7 +17,6 @@ RUN \
   libpng-dev \
   libonig-dev \
   libmagickwand-dev \
-  python3-dev \
   unzip \
   && docker-php-ext-configure gd --with-freetype --with-jpeg \
   && docker-php-ext-install -j$(nproc) \
@@ -34,7 +33,11 @@ RUN \
   && docker-php-ext-enable imagick \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
-  && curl -sS https://getcomposer.org/installer | \
-  php -- --install-dir=/usr/local/bin --filename=composer \
+  && curl -sS -o composer-setup.php https://getcomposer.org/installer \
+  && EXPECTED_HASH="$(curl -sS https://composer.github.io/installer.sig)" \
+  && ACTUAL_HASH="$(php -r "echo hash_file('sha384', 'composer-setup.php');")" \
+  && if [ "$EXPECTED_HASH" != "$ACTUAL_HASH" ]; then echo 'Composer installer corrupt'; rm composer-setup.php; exit 1; fi \
+  && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+  && rm composer-setup.php \
   && php --version \
   && composer --version
