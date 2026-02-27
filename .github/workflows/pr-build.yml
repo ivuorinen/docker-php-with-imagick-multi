@@ -5,6 +5,9 @@ name: PR Build and Report
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+    paths:
+      - "**/Dockerfile"
+      - ".github/workflows/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
